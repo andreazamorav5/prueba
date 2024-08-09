@@ -160,3 +160,29 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+%matplotlib inline
+plt.style.use('fivethirtyeight')
+import matplotlib
+import warnings
+warnings.filterwarnings('ignore')
+import statsmodels.api as sm
+from statsmodels.tsa.stattools import adfuller
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+from statsmodels.tsa.seasonal import seasonal_decompose
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, median_absolute_error, mean_squared_log_error
+
+import plotly.offline as py
+import io
+%pip install pmdarima
+import pmdarima as pm
+#leemos la data
+df = pd.read_csv('BDprecios.csv')
+df['PERIODO'] = pd.to_datetime(df['PERIODO'], dayfirst=True, infer_datetime_format=True)
+df = df.set_index('PERIODO')
+df.head()
+df.index.freq = "MS"
